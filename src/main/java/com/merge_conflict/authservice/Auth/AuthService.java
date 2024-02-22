@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
+
     private final UserRepository userRepository;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
@@ -32,9 +33,9 @@ public class AuthService {
     public AuthResponse register(RegisterRequest request) {
         User user = User.builder()
                 .username(request.getUsername())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode( request.getPassword()))
                 .firstname(request.getFirstname())
-                .lastname(request.getLastname())
+                .lastname(request.lastname)
                 .country(request.getCountry())
                 .role(Role.USER)
                 .build();
