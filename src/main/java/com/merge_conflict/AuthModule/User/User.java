@@ -1,6 +1,7 @@
-package com.merge_conflict.authservice.User;
+package com.merge_conflict.AuthModule.User;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,17 +18,28 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 public class User implements UserDetails {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Using IDENTITY for
     Integer id;
+
+    @NotBlank
     @Column(nullable = false)
-    String username;
     String password;
-    String firstname;
-    String lastname;
-    String country;
+
+    @NotBlank
+    @Email
+    @Column(nullable = false)
+    String email;
+
+    //An integer is ZERO for defect, is innecesary add NotBlank
+    @Min(16)
+    @Max(130)
+    @Column(nullable = false)
+    int age;
+
+
     @Enumerated(EnumType.STRING)
     Role role;
 
@@ -36,6 +48,13 @@ public class User implements UserDetails {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
+    //UserDetail requires the creation of this method
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    //Methods for control the JWT
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -55,4 +74,9 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public Integer getId() {
+        return id;
+    }
+    
 }

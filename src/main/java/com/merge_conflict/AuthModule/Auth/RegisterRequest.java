@@ -1,4 +1,4 @@
-package com.merge_conflict.authservice.Auth;
+package com.merge_conflict.AuthModule.Auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthResponse {
-    String token;
+public class RegisterRequest {
+    String password;
+    String email;
+    int age;
 }
+

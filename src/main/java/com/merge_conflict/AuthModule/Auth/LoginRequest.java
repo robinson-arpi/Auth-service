@@ -1,4 +1,4 @@
-package com.merge_conflict.authservice.Auth;
+package com.merge_conflict.AuthModule.Auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginRequest {
-    String username;
+    String email;
     String password;
 
 }

@@ -1,6 +1,6 @@
-package com.merge_conflict.authservice.Config;
+package com.merge_conflict.AuthModule.Config;
 
-import com.merge_conflict.authservice.User.UserRepository;
+import com.merge_conflict.AuthModule.User.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class ApplicationConfig {
 
     private final UserRepository userRepository;
+
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception
@@ -41,7 +42,7 @@ public class ApplicationConfig {
 
     @Bean
     public UserDetailsService userDetailService() {
-        return username -> userRepository.findByUsername(username)
+        return email -> userRepository.findByEmail(email)
                 .orElseThrow(()-> new UsernameNotFoundException("User not fournd"));
     }
 }
